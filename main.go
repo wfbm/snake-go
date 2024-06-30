@@ -49,7 +49,7 @@ type GameState struct {
 type Game struct {
 	snake  Snake
 	state  GameState
-	board  [][]byte
+	board  [][]Item
 	height int
 	width  int
 }
@@ -61,7 +61,7 @@ func main() {
 
 func NewGame(height, width int) Game {
 
-	board := make([][]byte, height)
+	board := make([][]Item, height)
 	snake := Snake{
 		position: SnakePosition{
 			spot: Spot{
@@ -72,7 +72,7 @@ func NewGame(height, width int) Game {
 	}
 
 	for h := 0; h < height; h++ {
-		board[h] = make([]byte, width)
+		board[h] = make([]Item, width)
 	}
 
 	for h := 0; h < height; h++ {
@@ -114,7 +114,7 @@ func (g Game) Update() {
 	g.Display()
 }
 
-func GetUnicode(value byte) string {
+func GetUnicode(value Item) string {
 
 	switch value {
 	case upperLeftCorner:
@@ -140,7 +140,7 @@ func GetUnicode(value byte) string {
 	}
 }
 
-func GetBoardItem(h, w, maxHeight, maxWidth int) byte {
+func GetBoardItem(h, w, maxHeight, maxWidth int) Item {
 
 	if h == 0 && w == 0 {
 		return upperLeftCorner
