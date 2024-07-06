@@ -169,6 +169,19 @@ func (s Spot) Next(request SpotRequest, direction Direction) Spot {
 	return *next
 }
 
+func (d Direction) IsMoveAllowed(other Direction) bool {
+
+	if d == other {
+		return true
+	}
+
+	if d == up || d == down {
+		return other == left || other == right
+	}
+
+	return other == up || other == down
+}
+
 func (s Spot) String() string {
 	return fmt.Sprintf("x: %d, y: %d", s.x, s.y)
 }

@@ -11,16 +11,15 @@ func main() {
 	keyPressed := make(chan Direction)
 	quitCh := make(chan bool)
 
-	keyHandler := KeyHandler{
-		keyPressed:  keyPressed,
-		quitChannel: quitCh,
-	}
+	keyHandler := NewGameHandler(keyPressed, quitCh)
 
-	go keyHandler.Handle()
+	go keyHandler.HandleInputs()
 
 	game := NewGame(20, 80, keyPressed, quitCh)
 
 	go game.Run()
 
 	<-quitCh
+
+	keyHandler.RestoreTerm()
 }
